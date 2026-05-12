@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AkaroShops — Affiliate Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green-dark:   #085041;
+    --green-mid:    #0F6E56;
+    --green:        #1D9E75;
+    --green-light:  #5DCAA5;
+    --green-pale:   #E1F5EE;
+    --bg:           #0a0a0a;
+    --bg2:          #111111;
+    --bg3:          #181818;
+    --card:         #161616;
+    --border:       rgba(255,255,255,0.08);
+    --border2:      rgba(255,255,255,0.12);
+    --text:         #f0f0f0;
+    --text2:        rgba(255,255,255,0.55);
+    --text3:        rgba(255,255,255,0.3);
+    --radius:       12px;
+    --radius-sm:    8px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 54px;
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 8px;
+    font-family: 'Playfair Display', serif;
+    font-size: 16px; font-weight: 700; color: var(--text);
+    text-decoration: none;
+  }
+  .nav-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
+  .nav-links { display: flex; gap: 4px; }
+  .nav-link {
+    font-size: 13px; color: var(--text2);
+    padding: 6px 14px; border-radius: 999px; text-decoration: none;
+    transition: color 0.2s, background 0.2s;
+  }
+  .nav-link:hover { color: var(--text); background: rgba(255,255,255,0.06); }
+
+  /* ─── HERO ─── */
+  .hero {
+    background: linear-gradient(135deg, #0a0a0a 0%, #111111 50%, #0a1a12 100%);
+    padding: 4rem 2rem 3rem;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 60% 40%, rgba(29,158,117,0.13) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(29,158,117,0.3), transparent);
+  }
+  .live-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(29,158,117,0.12);
+    border: 1px solid rgba(29,158,117,0.25);
+    border-radius: 999px; padding: 5px 16px; margin-bottom: 1.75rem;
+    position: relative;
+  }
+  .live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
+  .live-text { font-size: 11px; color: var(--green-light); letter-spacing: 2px; text-transform: uppercase; font-weight: 500; }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 7vw, 3.6rem);
+    font-weight: 900; color: #fff; line-height: 1.08;
+    margin-bottom: 1.1rem; position: relative;
+  }
+  .hero-title em { font-style: normal; color: var(--green); }
+  .hero-sub {
+    font-size: 15px; color: var(--text2);
+    max-width: 460px; margin: 0 auto 2.25rem;
+    line-height: 1.75; position: relative;
+  }
+  .hero-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; position: relative; }
+  .btn-primary {
+    background: var(--green); color: #fff;
+    border: none; padding: 13px 26px; border-radius: var(--radius-sm);
+    font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500;
+    cursor: pointer; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: var(--green-mid); transform: translateY(-1px); }
+  .btn-outline {
+    background: transparent; color: var(--text);
+    border: 1px solid var(--border2); padding: 13px 26px; border-radius: var(--radius-sm);
+    font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 400;
+    cursor: pointer; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: all 0.2s;
+  }
+  .btn-outline:hover { border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.04); }
+
+  /* stats */
+  .stats-bar {
+    display: flex; justify-content: center;
+    border-top: 1px solid var(--border);
+    margin-top: 3rem; padding-top: 2rem;
+    position: relative;
+  }
+  .stat { text-align: center; padding: 0 2.5rem; border-right: 1px solid var(--border); }
+  .stat:last-child { border-right: none; }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 1.7rem; font-weight: 700; color: var(--green); }
+  .stat-label { font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: 1.5px; margin-top: 3px; }
+
+  /* ─── SECTION WRAPPER ─── */
+  .section { padding: 2.5rem 2rem; }
+  .section + .section { padding-top: 0; }
+  .section-label {
+    font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--green-light); font-weight: 500; margin-bottom: 6px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; font-weight: 700;
+    color: var(--text); margin-bottom: 1.5rem;
+  }
+
+  /* ─── PRODUCTS ─── */
+  .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(195px, 1fr)); gap: 14px; }
+  .product-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1.25rem;
+    transition: border-color 0.2s, transform 0.2s;
+    cursor: pointer; text-decoration: none; color: inherit; display: block;
+  }
+  .product-card:hover { border-color: rgba(29,158,117,0.4); transform: translateY(-2px); }
+  .product-tag {
+    font-size: 10px; font-weight: 500;
+    color: var(--green-dark); background: var(--green-pale);
+    padding: 3px 10px; border-radius: 999px;
+    display: inline-block; margin-bottom: 10px;
+    letter-spacing: 1px; text-transform: uppercase;
+  }
+  .product-name { font-size: 13px; font-weight: 500; line-height: 1.45; margin-bottom: 10px; color: var(--text); }
+  .product-prices { display: flex; align-items: center; gap: 7px; margin-bottom: 14px; flex-wrap: wrap; }
+  .price-sale { font-size: 18px; font-weight: 700; color: var(--green); }
+  .price-orig { font-size: 12px; color: var(--text3); text-decoration: line-through; }
+  .price-save { font-size: 10px; background: rgba(29,158,117,0.15); color: var(--green-light); padding: 2px 8px; border-radius: 999px; font-weight: 500; }
+  .shop-btn {
+    width: 100%; background: var(--green); color: #fff;
+    border: none; padding: 10px; border-radius: var(--radius-sm);
+    font-size: 13px; font-weight: 500; cursor: pointer;
+    font-family: 'DM Sans', sans-serif; transition: background 0.2s;
+  }
+  .shop-btn:hover { background: var(--green-mid); }
+
+  /* ─── DIVIDER ─── */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border2), transparent);
+    margin: 0 2rem;
+  }
+
+  /* ─── AFFILIATE BOX ─── */
+  .affiliate-box {
+    background: linear-gradient(135deg, #0a1410, #0c2018);
+    border: 1px solid rgba(29,158,117,0.25);
+    border-radius: var(--radius); padding: 2rem; text-align: center;
+    margin: 2.5rem 2rem;
+  }
+  .aff-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: #fff; margin-bottom: 0.5rem; }
+  .aff-sub { font-size: 14px; color: var(--text2); margin-bottom: 1.75rem; line-height: 1.7; }
+  .link-box {
+    background: rgba(0,0,0,0.3); border: 1px solid rgba(29,158,117,0.15);
+    border-radius: var(--radius-sm); padding: 11px 14px;
+    display: flex; align-items: center; gap: 12px; margin-bottom: 10px;
+    text-align: left;
+  }
+  .link-url { font-size: 11px; color: var(--green-light); flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: monospace; }
+  .copy-btn {
+    background: var(--green); color: #fff;
+    border: none; padding: 7px 14px; border-radius: 6px;
+    font-size: 11px; font-weight: 500; cursor: pointer;
+    font-family: 'DM Sans', sans-serif; white-space: nowrap; flex-shrink: 0;
+    transition: background 0.2s;
+  }
+  .copy-btn:hover { background: var(--green-mid); }
+
+  /* ─── CAPTIONS ─── */
+  .caption-box {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1.5rem;
+    margin: 0 2rem 2.5rem;
+  }
+  .caption-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+  .caption-label { font-size: 10px; font-weight: 500; color: var(--text2); text-transform: uppercase; letter-spacing: 2px; }
+  .tab-row { display: flex; gap: 7px; flex-wrap: wrap; }
+  .tab {
+    font-size: 12px; padding: 5px 14px; border-radius: 999px;
+    border: 1px solid var(--border); background: transparent;
+    cursor: pointer; color: var(--text2);
+    font-family: 'DM Sans', sans-serif; transition: all 0.15s;
+  }
+  .tab.active { background: var(--green); border-color: var(--green); color: #fff; }
+  .caption-text { font-size: 13px; line-height: 1.85; color: var(--text); white-space: pre-wrap; margin-top: 1rem; }
+  .copy-caption {
+    margin-top: 1rem; background: transparent;
+    border: 1px solid var(--border); color: var(--text);
+    padding: 9px 20px; border-radius: var(--radius-sm);
+    font-size: 13px; cursor: pointer;
+    font-family: 'DM Sans', sans-serif; transition: all 0.15s;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .copy-caption:hover { background: rgba(255,255,255,0.05); }
+
+  /* ─── CALCULATOR SECTION ─── */
+  .calc-section { padding: 2.5rem 2rem; }
+  .controls {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1.5rem;
+  }
+  .ctrl-row { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+  .ctrl-row:last-child { margin-bottom: 0; }
+  .ctrl-row label { font-size: 13px; color: var(--text2); width: 185px; flex-shrink: 0; }
+  input[type=range] {
+    flex: 1; -webkit-appearance: none; appearance: none;
+    height: 4px; background: var(--border2); border-radius: 2px; outline: none;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none; appearance: none;
+    width: 16px; height: 16px; border-radius: 50%;
+    background: var(--green); cursor: pointer;
+    box-shadow: 0 0 0 3px rgba(29,158,117,0.2);
+  }
+  .ctrl-val { font-size: 14px; font-weight: 500; color: var(--text); min-width: 60px; text-align: right; }
+
+  .tiers-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 1.5rem; }
+  .tier-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1.25rem;
+  }
+  .tier-card.you { border-color: rgba(29,158,117,0.5); background: rgba(29,158,117,0.06); }
+  .tier-label { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 5px; }
+  .tier-label.c1 { color: var(--green-dark); }
+  .tier-label.c2 { color: var(--green-mid); }
+  .tier-label.c3 { color: var(--green); }
+  .tier-label.cy { color: var(--green-light); }
+  .tier-pct { font-size: 12px; color: var(--text2); margin-bottom: 10px; line-height: 1.5; }
+  .tier-earn { font-size: 22px; font-weight: 500; color: var(--text); }
+  .tier-earn span { font-size: 12px; color: var(--text2); font-weight: 400; }
+
+  .totals-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; margin-bottom: 1.5rem; }
+  .total-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem; }
+  .total-label { font-size: 11px; color: var(--text2); margin-bottom: 6px; }
+  .total-val { font-size: 22px; font-weight: 500; color: var(--text); }
+  .total-val.hi { color: var(--green); }
+
+  .tree {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1.5rem;
+  }
+  .tree-title { font-size: 11px; font-weight: 500; color: var(--text2); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 1.5px; }
+  .tree-row { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--border); }
+  .tree-row:last-child { border-bottom: none; }
+  .tree-indent { flex-shrink: 0; }
+  .tree-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .dot-you { background: var(--green-dark); }
+  .dot-t1  { background: var(--green); }
+  .dot-t2  { background: var(--green-light); }
+  .dot-t3  { background: rgba(93,202,165,0.5); }
+  .tree-name { font-size: 13px; color: var(--text); flex: 1; }
+  .tree-earn { font-size: 13px; font-weight: 500; color: var(--green); white-space: nowrap; }
+
+  .cap-section {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1.5rem;
+  }
+  .cap-title { font-size: 11px; font-weight: 500; color: var(--text2); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 1.5px; }
+  .cap-tabs { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 1rem; }
+  .cap-tab {
+    font-size: 12px; padding: 5px 14px; border-radius: 999px;
+    border: 1px solid var(--border); background: transparent;
+    cursor: pointer; color: var(--text2);
+    font-family: 'DM Sans', sans-serif; transition: all 0.15s;
+  }
+  .cap-tab.active { background: var(--green); border-color: var(--green); color: #fff; }
+  .cap-text {
+    font-size: 13px; line-height: 1.85; color: var(--text);
+    white-space: pre-wrap; background: rgba(0,0,0,0.2);
+    border-radius: var(--radius-sm); padding: 1rem;
+  }
+  .copy-outline {
+    margin-top: 10px; background: transparent;
+    border: 1px solid var(--border); color: var(--text);
+    padding: 8px 18px; border-radius: var(--radius-sm);
+    font-size: 13px; cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    display: inline-flex; align-items: center; gap: 6px;
+    transition: all 0.15s;
+  }
+  .copy-outline:hover { background: rgba(255,255,255,0.05); }
+
+  /* ─── FOOTER ─── */
+  .footer {
+    text-align: center; padding: 1.75rem 2rem;
+    border-top: 1px solid var(--border);
+  }
+  .footer-text { font-size: 12px; color: var(--text3); }
+
+  /* ─── ANIMATION ─── */
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: 0.5; transform: scale(1.3); }
+  }
+
+  /* ─── SCROLL ANCHOR OFFSET ─── */
+  #products, #affiliate, #calculator { scroll-margin-top: 64px; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 480px) {
+    .nav-links { display: none; }
+    .stat { padding: 0 1.25rem; }
+    .ctrl-row { flex-wrap: wrap; }
+    .ctrl-row label { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a class="nav-logo" href="#">
+    <div class="nav-dot"></div>
+    AkaroShops
+  </a>
+  <div class="nav-links">
+    <a class="nav-link" href="#products">Products</a>
+    <a class="nav-link" href="#calculator">Calculator</a>
+    <a class="nav-link" href="#affiliate">Join & Earn</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="live-badge"><div class="live-dot"></div><span class="live-text">Official Affiliate Hub</span></div>
+  <h1 class="hero-title">Premium health &<br><em>wellness products</em></h1>
+  <p class="hero-sub">Shop curated nutrition, skincare, and wellness packs — backed by science, loved by thousands.</p>
+  <div class="hero-btns">
+    <a href="https://akaroshops.com?sca_ref=10809580.SLvZjuJ6lKL2HyM" class="btn-primary" target="_blank">
+      <i class="ti ti-shopping-bag"></i> Shop Now
+    </a>
+    <a href="https://enterprise.uppromote.com/xsa0u9-iu/register?ref=SLvZjuJ6lKL2HyM&p=283810" class="btn-outline" target="_blank">
+      <i class="ti ti-users"></i> Join as Affiliate
+    </a>
+  </div>
+  <div class="stats-bar">
+    <div class="stat"><div class="stat-num">50%</div><div class="stat-label">Up to off</div></div>
+    <div class="stat"><div class="stat-num">30+</div><div class="stat-label">Countries</div></div>
+    <div class="stat"><div class="stat-num">3-Tier</div><div class="stat-label">Commissions</div></div>
+    <div class="stat"><div class="stat-num">$$$</div><div class="stat-label">You earn</div></div>
+  </div>
+</div>
+
+<!-- PRODUCTS -->
+<div id="products" class="section">
+  <div class="section-label">Shop</div>
+  <div class="section-title">Featured products</div>
+  <div class="products-grid">
+    <a href="https://akaroshops.com/products/hyper-e-tocotrienols-liquid?sca_ref=10809580.SLvZjuJ6lKL2HyM" class="product-card" target="_blank">
+      <div class="product-tag">Best seller</div>
+      <div class="product-name">Hyper E Tocotrienols (Liquid)</div>
+      <div class="product-prices">
+        <span class="price-sale">$49.95</span>
+        <span class="price-orig">$99.95</span>
+        <span class="price-save">50% off</span>
+      </div>
+      <button class="shop-btn">Shop now →</button>
+    </a>
+    <a href="https://akaroshops.com/products/skincare-pack-special-purchase?sca_ref=10809580.SLvZjuJ6lKL2HyM" class="product-card" target="_blank">
+      <div class="product-tag">Skincare</div>
+      <div class="product-name">Skincare Pack Starter Pack</div>
+      <div class="product-prices">
+        <span class="price-sale">$99.95</span>
+        <span class="price-orig">$149.95</span>
+        <span class="price-save">33% off</span>
+      </div>
+      <button class="shop-btn">Shop now →</button>
+    </a>
+    <a href="https://akaroshops.com/products/mens-health-pack-special-purchase?sca_ref=10809580.SLvZjuJ6lKL2HyM" class="product-card" target="_blank">
+      <div class="product-tag">Men's health</div>
+      <div class="product-name">Men's Health Pack Starter Pack</div>
+      <div class="product-prices">
+        <span class="price-sale">$99.95</span>
+        <span class="price-orig">$149.95</span>
+        <span class="price-save">33% off</span>
+      </div>
+      <button class="shop-btn">Shop now →</button>
+    </a>
+    <a href="https://akaroshops.com/products/female-health-pack-special-purchase?sca_ref=10809580.SLvZjuJ6lKL2HyM" class="product-card" target="_blank">
+      <div class="product-tag">Women's health</div>
+      <div class="product-name">Female Health Pack Starter Pack</div>
+      <div class="product-prices">
+        <span class="price-sale">$99.95</span>
+        <span class="price-orig">$149.95</span>
+        <span class="price-save">33% off</span>
+      </div>
+      <button class="shop-btn">Shop now →</button>
+    </a>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- CALCULATOR -->
+<div id="calculator" class="calc-section">
+  <div class="section-label">Earnings</div>
+  <div class="section-title">3-Tier commission calculator</div>
+  <p style="font-size:14px;color:var(--text2);margin-bottom:1.5rem;line-height:1.7;">Adjust the sliders to see how much you can earn across all 3 tiers.</p>
+
+  <div class="controls">
+    <div class="ctrl-row">
+      <label>Avg. purchase amount ($)</label>
+      <input type="range" min="10" max="500" step="5" value="100" id="purchase" oninput="calc()">
+      <span class="ctrl-val" id="purchase-out">$100</span>
+    </div>
+    <div class="ctrl-row">
+      <label>Tier 1 referrals (direct)</label>
+      <input type="range" min="0" max="50" step="1" value="5" id="t1count" oninput="calc()">
+      <span class="ctrl-val" id="t1count-out">5</span>
+    </div>
+    <div class="ctrl-row">
+      <label>Tier 2 per Tier 1 referral</label>
+      <input type="range" min="0" max="20" step="1" value="3" id="t2count" oninput="calc()">
+      <span class="ctrl-val" id="t2count-out">3</span>
+    </div>
+    <div class="ctrl-row">
+      <label>Tier 3 per Tier 2 referral</label>
+      <input type="range" min="0" max="20" step="1" value="2" id="t3count" oninput="calc()">
+      <span class="ctrl-val" id="t3count-out">2</span>
+    </div>
+  </div>
+
+  <div class="tiers-grid">
+    <div class="tier-card you">
+      <div class="tier-label cy">You earn</div>
+      <div class="tier-pct">20% Tier 1 · 10% Tier 2 · 5% Tier 3</div>
+      <div class="tier-earn" id="you-earn">$0 <span>/ month</span></div>
+    </div>
+    <div class="tier-card">
+      <div class="tier-label c1">Tier 1 — direct</div>
+      <div class="tier-pct">20% commission · <span id="t1-count-display">5 people</span></div>
+      <div class="tier-earn" id="t1-total">$0 <span>you earn</span></div>
+    </div>
+    <div class="tier-card">
+      <div class="tier-label c2">Tier 2 — their referrals</div>
+      <div class="tier-pct">10% to you · <span id="t2-count-display">15 people</span></div>
+      <div class="tier-earn" id="t2-total">$0 <span>you earn</span></div>
+    </div>
+    <div class="tier-card">
+      <div class="tier-label c3">Tier 3 — deepest</div>
+      <div class="tier-pct">5% to you · <span id="t3-count-display">30 people</span></div>
+      <div class="tier-earn" id="t3-total">$0 <span>you earn</span></div>
+    </div>
+  </div>
+
+  <div class="totals-grid">
+    <div class="total-card">
+      <div class="total-label">Monthly income</div>
+      <div class="total-val hi" id="monthly-total">$0</div>
+    </div>
+    <div class="total-card">
+      <div class="total-label">Annual projection</div>
+      <div class="total-val hi" id="annual-total">$0</div>
+    </div>
+    <div class="total-card">
+      <div class="total-label">People in network</div>
+      <div class="total-val" id="network-size">0</div>
+    </div>
+    <div class="total-card">
+      <div class="total-label">Network monthly sales</div>
+      <div class="total-val" id="network-sales">$0</div>
+    </div>
+  </div>
+
+  <div class="tree">
+    <div class="tree-title">How your network flows</div>
+    <div class="tree-row">
+      <div class="tree-dot dot-you"></div>
+      <div class="tree-name" style="font-weight:500;">You</div>
+      <div class="tree-earn" id="flow-you">Earn $0/mo</div>
+    </div>
+    <div class="tree-row">
+      <div class="tree-indent" style="width:20px"></div>
+      <div class="tree-dot dot-t1"></div>
+      <div class="tree-name">Tier 1 — <span id="flow-t1-count">5</span> direct referrals buy</div>
+      <div class="tree-earn" id="flow-t1">+$0 to you</div>
+    </div>
+    <div class="tree-row">
+      <div class="tree-indent" style="width:40px"></div>
+      <div class="tree-dot dot-t2"></div>
+      <div class="tree-name">Tier 2 — <span id="flow-t2-count">15</span> people buy</div>
+      <div class="tree-earn" id="flow-t2">+$0 to you</div>
+    </div>
+    <div class="tree-row">
+      <div class="tree-indent" style="width:60px"></div>
+      <div class="tree-dot dot-t3"></div>
+      <div class="tree-name">Tier 3 — <span id="flow-t3-count">30</span> people buy</div>
+      <div class="tree-earn" id="flow-t3">+$0 to you</div>
+    </div>
+  </div>
+
+  <div class="cap-section">
+    <div class="cap-title">Affiliate recruitment captions</div>
+    <div class="cap-tabs">
+      <button class="cap-tab active" onclick="setCapTab(0,this)">Facebook</button>
+      <button class="cap-tab" onclick="setCapTab(1,this)">Instagram</button>
+      <button class="cap-tab" onclick="setCapTab(2,this)">TikTok</button>
+      <button class="cap-tab" onclick="setCapTab(3,this)">Text / DM</button>
+    </div>
+    <div class="cap-text" id="cap-text"></div>
+    <button class="copy-outline" onclick="copyCap()"><i class="ti ti-copy"></i> Copy caption</button>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- AFFILIATE BOX -->
+<div id="affiliate" class="affiliate-box">
+  <div class="aff-title">Want to earn? Join free.</div>
+  <div class="aff-sub">Sign up as an affiliate and earn commissions on every sale. Share your link — get paid.</div>
+  <div class="link-box">
+    <span class="link-url">enterprise.uppromote.com/xsa0u9-iu/register?ref=SLvZjuJ6lKL2HyM</span>
+    <button class="copy-btn" onclick="copyLink('https://enterprise.uppromote.com/xsa0u9-iu/register?ref=SLvZjuJ6lKL2HyM&p=283810','aff-link-btn')" id="aff-link-btn">Copy</button>
+  </div>
+  <div class="link-box">
+    <span class="link-url">akaroshops.com?sca_ref=10809580.SLvZjuJ6lKL2HyM</span>
+    <button class="copy-btn" onclick="copyLink('https://akaroshops.com?sca_ref=10809580.SLvZjuJ6lKL2HyM','shop-link-btn')" id="shop-link-btn">Copy</button>
+  </div>
+</div>
+
+<!-- PROMO CAPTIONS -->
+<div class="caption-box">
+  <div class="caption-header">
+    <span class="caption-label">Ready-to-post captions</span>
+  </div>
+  <div class="tab-row">
+    <button class="tab active" onclick="setPromoTab(0,this)">Facebook</button>
+    <button class="tab" onclick="setPromoTab(1,this)">Instagram</button>
+    <button class="tab" onclick="setPromoTab(2,this)">TikTok</button>
+    <button class="tab" onclick="setPromoTab(3,this)">Affiliate recruit</button>
+  </div>
+  <div class="caption-text" id="promo-caption-display"></div>
+  <button class="copy-caption" onclick="copyPromoCaption()">
+    <i class="ti ti-copy"></i> Copy caption
+  </button>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-text">Your affiliate links are embedded in every product button above · AkaroShops Affiliate Hub</div>
+</div>
+
+<script>
+// ─── AFFILIATE LINK COPY ───
+function copyLink(url, btnId) {
+  navigator.clipboard.writeText(url).then(() => {
+    const btn = document.getElementById(btnId);
+    const orig = btn.textContent;
+    btn.textContent = '✓ Copied!';
+    setTimeout(() => btn.textContent = orig, 2000);
+  });
+}
+
+// ─── PROMO CAPTIONS ───
+const promoCaptions = [
+  `I've been using AkaroShops products and the results speak for themselves.\n\nFrom premium Vitamin E supplements to full skincare starter packs — everything is on sale right now (up to 50% off).\n\nShop here: https://akaroshops.com?sca_ref=10809580.SLvZjuJ6lKL2HyM\n\n#wellness #supplements #skincare #healthylifestyle #AkaroShops`,
+  `Real results start with real nutrition.\n\nCheck out @AkaroShops — their Hyper E Tocotrienols and Health Packs are currently 50% off.\n\nLink in bio.\n\n#wellness #vitamins #skincareroutine #healthylife #supplements #selfcare`,
+  `POV: you finally found supplements that actually work.\n\nAkaroShops has their entire health and skincare line on sale right now.\n\nLink below:\nhttps://akaroshops.com?sca_ref=10809580.SLvZjuJ6lKL2HyM\n\n#healthtok #wellnesstok #supplementcheck #fyp #vitamins`,
+  `Want to earn money sharing products you believe in?\n\nI'm an affiliate with AkaroShops — a premium wellness brand — and you can be too.\n\nSign up free here:\nhttps://enterprise.uppromote.com/xsa0u9-iu/register?ref=SLvZjuJ6lKL2HyM&p=283810\n\nNo experience needed. Share your link and earn commissions on every sale.`
+];
+
+let activePromoTab = 0;
+document.getElementById('promo-caption-display').textContent = promoCaptions[0];
+
+function setPromoTab(i, el) {
+  activePromoTab = i;
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('promo-caption-display').textContent = promoCaptions[i];
+}
+function copyPromoCaption() {
+  navigator.clipboard.writeText(promoCaptions[activePromoTab]).then(() => {
+    const btn = document.querySelector('.copy-caption');
+    const orig = btn.innerHTML;
+    btn.innerHTML = '<i class="ti ti-check"></i> Copied!';
+    setTimeout(() => btn.innerHTML = orig, 2000);
+  });
+}
+
+// ─── CALCULATOR ───
+const AFFILIATE_LINK = 'https://enterprise.uppromote.com/xsa0u9-iu/register?ref=SLvZjuJ6lKL2HyM&p=283810';
+const SHOP_LINK = 'https://akaroshops.com?sca_ref=10809580.SLvZjuJ6lKL2HyM';
+
+function fmt(n) { return '$' + Math.round(n).toLocaleString(); }
+function fmtN(n) { return Math.round(n).toLocaleString(); }
+
+let activeCapTab = 0;
+let captions = [];
+
+function calc() {
+  const purchase = +document.getElementById('purchase').value;
+  const t1 = +document.getElementById('t1count').value;
+  const t2perT1 = +document.getElementById('t2count').value;
+  const t3perT2 = +document.getElementById('t3count').value;
+
+  document.getElementById('purchase-out').textContent = '$' + purchase;
+  document.getElementById('t1count-out').textContent = t1;
+  document.getElementById('t2count-out').textContent = t2perT1;
+  document.getElementById('t3count-out').textContent = t3perT2;
+
+  const t2total = t1 * t2perT1;
+  const t3total = t2total * t3perT2;
+  const network = t1 + t2total + t3total;
+
+  const earnT1 = t1 * purchase * 0.20;
+  const earnT2 = t2total * purchase * 0.10;
+  const earnT3 = t3total * purchase * 0.05;
+  const monthly = earnT1 + earnT2 + earnT3;
+  const annual = monthly * 12;
+  const networkSales = network * purchase;
+
+  document.getElementById('t1-count-display').textContent = t1 + ' people';
+  document.getElementById('t2-count-display').textContent = t2total + ' people';
+  document.getElementById('t3-count-display').textContent = t3total + ' people';
+
+  document.getElementById('you-earn').innerHTML = fmt(monthly) + ' <span>/ month</span>';
+  document.getElementById('t1-total').innerHTML = fmt(earnT1) + ' <span>you earn</span>';
+  document.getElementById('t2-total').innerHTML = fmt(earnT2) + ' <span>you earn</span>';
+  document.getElementById('t3-total').innerHTML = fmt(earnT3) + ' <span>you earn</span>';
+
+  document.getElementById('monthly-total').textContent = fmt(monthly);
+  document.getElementById('annual-total').textContent = fmt(annual);
+  document.getElementById('network-size').textContent = fmtN(network);
+  document.getElementById('network-sales').textContent = fmt(networkSales);
+
+  document.getElementById('flow-you').textContent = 'Earn ' + fmt(monthly) + '/mo';
+  document.getElementById('flow-t1-count').textContent = t1;
+  document.getElementById('flow-t1').textContent = '+' + fmt(earnT1) + ' to you';
+  document.getElementById('flow-t2-count').textContent = t2total;
+  document.getElementById('flow-t2').textContent = '+' + fmt(earnT2) + ' to you';
+  document.getElementById('flow-t3-count').textContent = t3total;
+  document.getElementById('flow-t3').textContent = '+' + fmt(earnT3) + ' to you';
+
+  updateCaptions(purchase, t1, t2total, t3total, monthly, annual);
+}
+
+function updateCaptions(purchase, t1, t2, t3, monthly, annual) {
+  captions = [
+    `Did you know you can earn passive income just by sharing wellness products?\n\nI'm part of the Akaro Referral Program — a 3-tier commission system:\n\nTier 1 (your direct sign-ups): 20% commission\nTier 2 (their referrals): 10% to you\nTier 3 (one level deeper): 5% to you\n\nOn every ${fmt(purchase)} purchase in your network, you keep earning. For life.\n\nSign up free here:\n${AFFILIATE_LINK}\n\nOr shop the products:\n${SHOP_LINK}`,
+    `Passive income is real — here's how I do it:\n\n3-tier affiliate program with @AkaroShops\n\nSign someone up, they buy, you earn 20%.\nThey sign someone up, you earn 10%.\nOne level deeper, you earn 5%.\n\nLink in bio to join free.\n\n#passiveincome #affiliatemarketing #wellness #makemoneyonline #akaroshops`,
+    `POV: you built a 3-tier income stream from a wellness brand.\n\nAkaro Referral Program breakdown:\n- Tier 1: 20% on every sale\n- Tier 2: 10% on their network's sales\n- Tier 3: 5% on the next level\n\nLifetime commissions. No cap.\n\nJoin free: ${AFFILIATE_LINK}\n\n#affiliatetok #passiveincome #sidehustle #fyp`,
+    `Thought of you for this — I'm earning commissions through the Akaro Referral Program.\n\nIt's a 3-tier system: 20% on your direct referrals, 10% and 5% on their networks. Lifetime.\n\nFree to join: ${AFFILIATE_LINK}\n\nLet me know if you have questions.`
+  ];
+  document.getElementById('cap-text').textContent = captions[activeCapTab];
+}
+
+function setCapTab(i, el) {
+  activeCapTab = i;
+  document.querySelectorAll('.cap-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('cap-text').textContent = captions[i];
+}
+
+function copyCap() {
+  navigator.clipboard.writeText(captions[activeCapTab]).then(() => {
+    const btn = document.querySelector('.copy-outline');
+    const orig = btn.innerHTML;
+    btn.innerHTML = '<i class="ti ti-check"></i> Copied!';
+    setTimeout(() => btn.innerHTML = orig, 2000);
+  });
+}
+
+calc();
+</script>
+</body>
+</html>
